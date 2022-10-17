@@ -35,6 +35,6 @@ Second, it is necessary to config the database so in the desired database proper
 ## 👉 Step 3: 
  > ![ConfigDB3](https://user-images.githubusercontent.com/45565026/196172970-dcb1e1a0-ef3f-40a2-835a-a29cf82a0850.png)
 
-## 👉 Step 4: 
+## 👉 Step 4: Adding DB file
  > ![ConfigDB4](https://user-images.githubusercontent.com/45565026/196173161-9f5b5ef3-8f52-4212-bf27-e90928160513.png)
 
