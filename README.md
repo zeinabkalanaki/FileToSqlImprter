@@ -23,3 +23,5 @@ So in Sql server configuration manager, follow steps as shown in the pictures be
  
 ## 👉 Step 6:  
  > ![Enabling5](https://user-images.githubusercontent.com/45565026/196167999-5ed54d1e-b675-42ac-a9d1-bd474d0cb0b0.png)
+ 
+Second, it is necessary to config the database
