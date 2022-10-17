@@ -24,4 +24,17 @@ So in Sql server configuration manager, follow steps as shown in the pictures be
 ## 👉 Step 6:  
  > ![Enabling5](https://user-images.githubusercontent.com/45565026/196167999-5ed54d1e-b675-42ac-a9d1-bd474d0cb0b0.png)
  
-Second, it is necessary to config the database
+Second, it is necessary to config the database so in the desired database properties set config below
+
+## 👉 Step 1: 
+ > ![ConfigDB0](https://user-images.githubusercontent.com/45565026/196172639-50f2c9c4-bb78-46af-bcbe-ddb84d441766.png)
+
+## 👉 Step 2: Adding file group
+ > ![ConfigDB1](https://user-images.githubusercontent.com/45565026/196172781-c2f58858-b7f1-4802-8518-ba95a6f02ef7.png)
+
+## 👉 Step 3: 
+ > ![ConfigDB3](https://user-images.githubusercontent.com/45565026/196172970-dcb1e1a0-ef3f-40a2-835a-a29cf82a0850.png)
+
+## 👉 Step 4: 
+ > ![ConfigDB4](https://user-images.githubusercontent.com/45565026/196173161-9f5b5ef3-8f52-4212-bf27-e90928160513.png)
+
