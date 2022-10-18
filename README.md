@@ -53,5 +53,8 @@ UNIQUE NONCLUSTERED
 GO
 
 ```
+The primary key in the table should be configured like below
+
+![ConfigDB5](https://user-images.githubusercontent.com/45565026/196348840-d98f7fbf-addf-4c46-a634-aba706849c11.png)
 
 
