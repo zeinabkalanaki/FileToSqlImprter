@@ -38,3 +38,20 @@ Second, it is necessary to config the database so in the desired database proper
 ## 👉 Step 4: Adding DB file
  > ![ConfigDB4](https://user-images.githubusercontent.com/45565026/196173161-9f5b5ef3-8f52-4212-bf27-e90928160513.png)
 
+Now by the means of script below a table should be created. Note that the name of FILESTREAM_ON should be the name of the file group was specified in previews steps --> [DocFileGroup]
+```
+CREATE TABLE [dbo].[FILESTREAM_Documents](
+  [DocumentID] [uniqueidentifier] ROWGUIDCOL  NOT NULL,
+  [DocumentName] [varchar](128) NULL,
+  [DocumentType] [varchar](10) NULL,
+  [DocumentFS] [varbinary](max) FILESTREAM  NOT NULL,
+UNIQUE NONCLUSTERED 
+(
+  [DocumentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] FILESTREAM_ON [DocFileGroup]
+GO
+
+```
+
+
