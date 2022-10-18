@@ -76,3 +76,59 @@ VALUES
 )
 
 ```
+
+To retrieve files from a directory, first of all, some options should be enabled
+First enable advance option in master database.
+
+```
+USE master; 
+GO
+
+-- To allow advanced options to be changed.
+EXECUTE sp_configure 'show advanced options', 1; 
+GO 
+-- To update the currently configured value for advanced options. 
+RECONFIGURE; 
+GO
+
+```
+Now, Enable Xp_cmdshell extended stored procedure.
+
+```
+-- To enable the feature. 
+EXEC sp_configure 'xp_cmdshell', 1; 
+GO 
+-- To update the currently configured value for this feature. 
+RECONFIGURE;
+```
+
+There are two ways to get the list of folders files in a SQL table.
+- Using xp_cmdshell 
+- Using xp_DirTree
+
+to use xp_cmdshell follow commands below
+```
+CREATE TABLE tblgetfileList (excelFileName VARCHAR(100));
+
+INSERT INTO tblgetfileList
+
+EXEC xp_cmdshell 'dir /B "D:\databasefile"';
+
+select * from tblgetfileList
+```
+to use xp_DirTree follow commands below
+
+```
+DECLARE @dirPath nvarchar(500) = 'D:\databasefile' 
+
+DECLARE @tblgetfileList TABLE
+(FileName nvarchar(500)
+,depth int
+,isFile int)
+
+INSERT INTO @tblgetfileList
+EXEC xp_DirTree @dirPath,1,1
+
+SELECT FileName from @tblgetfileList where isFile=1
+
+```
