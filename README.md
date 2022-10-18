@@ -106,7 +106,7 @@ There are two ways to get the list of folders files in a SQL table.
 - Using xp_cmdshell 
 - Using xp_DirTree
 
-to use xp_cmdshell follow commands below
+To use xp_cmdshell follow commands below
 ```
 CREATE TABLE tblgetfileList (excelFileName VARCHAR(100));
 
@@ -116,7 +116,7 @@ EXEC xp_cmdshell 'dir /B "D:\databasefile"';
 
 select * from tblgetfileList
 ```
-to use xp_DirTree follow commands below
+To use xp_DirTree follow commands below
 
 ```
 DECLARE @dirPath nvarchar(500) = 'D:\databasefile' 
@@ -130,5 +130,72 @@ INSERT INTO @tblgetfileList
 EXEC xp_DirTree @dirPath,1,1
 
 SELECT FileName from @tblgetfileList where isFile=1
+
+```
+Now the complete script for retrieve files in a directory and insert into database :
+
+```
+DECLARE @dirPath nvarchar(500) = 'F:\New folder\' 
+
+DECLARE @tblgetfileList TABLE
+(FileName nvarchar(500)
+,depth int
+,isFile int)
+
+INSERT INTO @tblgetfileList
+EXEC xp_DirTree @dirPath,1,1
+
+--SELECT FileName from @tblgetfileList where isFile=1
+
+DECLARE @FileName VARCHAR(500);
+DECLARE @sql NVARCHAR(MAX) 
+DECLARE @FilePath VARCHAR(500);
+
+
+DECLARE cursor_file CURSOR
+FOR SELECT 
+        FileName
+    FROM 
+        @tblgetfileList where isFile=1
+
+OPEN cursor_file;
+
+FETCH NEXT FROM cursor_file INTO 
+    @FileName 
+WHILE @@FETCH_STATUS = 0
+    BEGIN
+	    print @FileName
+
+        SET @FilePath = Concat(@dirPath, @FileName);
+
+		SET @sql = '  
+		DECLARE @File varbinary(MAX);
+		set @File = (SELECT  
+			CAST(  
+			bulkcolumn as varbinary(max)  
+			)  
+			FROM  
+			OPENROWSET(BULK ''' + @FilePath + ''', SINGLE_BLOB) as MyData); 
+ 
+			INSERT INTO [FILESTREAM_Documents]  
+			VALUES  
+			(  
+			NEWID(),  
+			''' + SUBSTRING(@FileName, 1, CHARINDEX('.',@FileName) -1 ) + ''',  
+			''' + SUBSTRING(@FileName, CHARINDEX('.',@FileName)+ 1, len(@FileName)) + ''' , 
+			@File
+			)'
+
+
+EXEC sp_executesql @stmt = @sql 
+                
+
+        FETCH NEXT FROM cursor_file INTO 
+            @FileName ;
+    END;
+
+CLOSE cursor_file;
+
+DEALLOCATE cursor_file;
 
 ```
