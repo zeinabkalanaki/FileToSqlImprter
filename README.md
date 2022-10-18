@@ -58,3 +58,21 @@ The primary key in the table should be configured like below
 ![ConfigDB5](https://user-images.githubusercontent.com/45565026/196348840-d98f7fbf-addf-4c46-a634-aba706849c11.png)
 
 
+To insert a record in the table by T-Sql 'OPENROWSET' method should be used to convert a file on hard disc to varbinary as below:
+
+```
+DECLARE @File varbinary(MAX);  
+SELECT @File = CAST(bulkcolumn as varbinary(max))  
+FROM  
+OPENROWSET(BULK 'C:\MyFile.pdf', SINGLE_BLOB) as MyData; 
+ 
+INSERT INTO [FILESTREAM_Documents]  
+VALUES  
+(  
+  NEWID(),  
+  'MyFile',  
+  '.pdf' , 
+   @File
+)
+
+```
